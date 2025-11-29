@@ -10,8 +10,10 @@
     "db:push": "drizzle-kit push",
     "db:setup": "npx tsx scripts/setup-db.ts",
     "db:drop": "npx tsx scripts/reset-db.ts",
-    "db:reset": "npx tsx scripts/reset-db.ts && drizzle-kit push && npx tsx scripts/setup-db.ts",
+    "db:reset": "npx tsx scripts/reset-db.ts && npx tsx scripts/run-migrations.ts && npx tsx scripts/setup-db.ts",
     "db:migrate": "npx tsx scripts/run-migrations.ts",
+    "db:seed": "npx tsx scripts/seed-db.ts",
+    "db:fresh": "npx tsx scripts/reset-db.ts && npx tsx scripts/run-migrations.ts && npx tsx scripts/setup-db.ts && npx tsx scripts/seed-db.ts",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {

@@ -73,6 +73,6 @@ CREATE POLICY subscriptions_update_policy ON subscriptions
 CREATE TRIGGER update_subscriptions_updated_at
   BEFORE UPDATE ON subscriptions
   FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
+  EXECUTE FUNCTION update_updated_at();
 
 COMMENT ON TABLE subscriptions IS 'Recurring expense subscriptions with sharing support';

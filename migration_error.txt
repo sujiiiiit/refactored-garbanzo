@@ -1,0 +1,119 @@
+﻿
+> expense@0.1.0 db:migrate
+> npx tsx scripts/run-migrations.ts
+
+[dotenv@17.2.3] injecting env (11) from .env.local -- tip: ≡ƒöÉ prevent building .env in docker: https://dotenvx.com/prebuild
+≡ƒÜÇ Starting database migrations...
+
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42P07',
+  message: 'relation "_migrations" already exists, skipping',
+  file: 'parse_utilcmd.c',
+  line: '207',
+  routine: 'transformCreateStmt'
+}
+Running migration: 20250129000000_base_schema.sql...
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42710',
+  message: 'extension "uuid-ossp" already exists, skipping',
+  file: 'extension.c',
+  line: '1791',
+  routine: 'CreateExtension'
+}
+{
+  severity_local: 'NOTICE',
+  severity: 'NOTICE',
+  code: '42710',
+  message: 'extension "pg_trgm" already exists, skipping',
+  file: 'extension.c',
+  line: '1791',
+  routine: 'CreateExtension'
+}
+node.exe :    Γ¥î 
+Failed to apply 2025
+0129000000_base_sche
+ma.sql:
+At C:\Program Files\
+nodejs\npm.ps1:29 
+char:3
++   & $NODE_EXE 
+$NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (   Γ   
+ ¥î Failed t...a    
+se_schema.sql::    
+String) [], Rem    
+oteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+PostgresError: type 
+"group_type" 
+already exists
+    at 
+ErrorResponse 
+(E:\Hackathon 
+Project\Mumbai Hacks
+\expense-tracker-mai
+n\refactored-garbanz
+o\node_modules\.pnpm
+\postgres@3.4.7\node
+_modules\postgres\cj
+s\src\connection.js:
+794:26)
+    at handle 
+(E:\Hackathon 
+Project\Mumbai Hacks
+\expense-tracker-mai
+n\refactored-garbanz
+o\node_modules\.pnpm
+\postgres@3.4.7\node
+_modules\postgres\cj
+s\src\connection.js:
+480:6)
+    at Socket.data 
+(E:\Hackathon 
+Project\Mumbai Hacks
+\expense-tracker-mai
+n\refactored-garbanz
+o\node_modules\.pnpm
+\postgres@3.4.7\node
+_modules\postgres\cj
+s\src\connection.js:
+315:9)
+    at Socket.emit 
+(node:events:518:28)
+    at addChunk (nod
+e:internal/streams/r
+eadable:561:12)
+    at readableAddCh
+unkPushByteMode (nod
+e:internal/streams/r
+eadable:512:3)
+    at 
+Readable.push (node:
+internal/streams/rea
+dable:392:5)
+    at 
+TCP.onStreamRead (no
+de:internal/stream_b
+ase_commons:189:23) 
+{
+  severity_local: 
+'ERROR',
+  severity: 'ERROR',
+  code: '42710',
+  file: 
+'typecmds.c',
+  line: '1177',
+  routine: 
+'DefineEnum'
+}

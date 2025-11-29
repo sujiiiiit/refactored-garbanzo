@@ -76,7 +76,7 @@ async function runMigrations() {
 
       try {
         await sql.begin(async sql => {
-          // Run the migration SQL
+          // Run the entire migration as one block to preserve DO blocks and complex statements
           await sql.unsafe(content);
           
           // Record it as applied
@@ -86,9 +86,13 @@ async function runMigrations() {
         });
         console.log(`   ✅ Applied: ${file}`);
         count++;
-      } catch (err) {
-        console.error(`   ❌ Failed to apply ${file}:`);
-        console.error(err);
+      } catch (err: any) {
+        console.error(`\n   ❌ Failed to apply ${file}:`);
+        console.error('Error message:', err.message);
+        console.error('Error code:', err.code);
+        if (err.detail) console.error('Error detail:', err.detail);
+        if (err.hint) console.error('Error hint:', err.hint);
+        if (err.position) console.error('Error position:', err.position);
         process.exit(1); // Stop on first error
       }
     }

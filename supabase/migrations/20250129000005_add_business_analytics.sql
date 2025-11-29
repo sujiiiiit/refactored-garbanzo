@@ -2,8 +2,8 @@
 -- RUNWAY PREDICTIONS (for business entities)
 -- =============================================
 
--- Enable TimescaleDB extension for time-series data
-CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
+-- Note: TimescaleDB is optional. If available, you can convert these to hypertables
+-- CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
 
 CREATE TABLE IF NOT EXISTS runway_predictions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS runway_predictions (
 
 CREATE INDEX idx_runway_predictions_entity ON runway_predictions(entity_id, prediction_date DESC);
 
--- Convert to TimescaleDB hypertable
-SELECT create_hypertable('runway_predictions', 'prediction_date', if_not_exists => TRUE);
+-- Convert to TimescaleDB hypertable (optional, requires TimescaleDB extension)
+-- SELECT create_hypertable('runway_predictions', 'prediction_date', if_not_exists => TRUE);
 
 -- =============================================
 -- BURN RATE HISTORY (time-series data)
@@ -60,8 +60,8 @@ CREATE TABLE IF NOT EXISTS burn_rate_history (
 
 CREATE INDEX idx_burn_rate_entity ON burn_rate_history(entity_id, time DESC);
 
--- Convert to TimescaleDB hypertable
-SELECT create_hypertable('burn_rate_history', 'time', if_not_exists => TRUE);
+-- Convert to TimescaleDB hypertable (optional, requires TimescaleDB extension)
+-- SELECT create_hypertable('burn_rate_history', 'time', if_not_exists => TRUE);
 
 -- =============================================
 -- CASHFLOW OPTIMIZATION (cross-entity balances)
