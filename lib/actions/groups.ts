@@ -99,7 +99,7 @@ export async function getGroupByInviteCode(inviteCode: string) {
 export async function createGroup(input: CreateGroupRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  
+
   if (!user) {
     return { error: 'Not authenticated', data: null };
   }
@@ -146,11 +146,26 @@ export async function createGroup(input: CreateGroupRequest) {
     p_entity_type: 'group',
     p_entity_id: group.id,
     p_metadata: { name: group.name },
+  }).catch(() => {
+    // Ignore activity log errors
   });
+
+  // Verify membership was created before returning
+  const { data: membership } = await supabase
+    .from('group_members')
+    .select('role')
+    .eq('group_id', group.id)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!membership) {
+    return { error: 'Failed to verify group membership', data: null };
+  }
 
   revalidatePath('/dashboard');
   revalidatePath('/groups');
-  
+  revalidatePath(`/groups/${group.id}`);
+
   return { error: null, data: group };
 }
 
@@ -220,7 +235,7 @@ export async function deleteGroup(groupId: string) {
 export async function joinGroup(inviteCode: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  
+
   if (!user) {
     return { error: 'Not authenticated', data: null };
   }
@@ -269,11 +284,26 @@ export async function joinGroup(inviteCode: string) {
     p_entity_type: 'group',
     p_entity_id: group.id,
     p_metadata: null,
+  }).catch(() => {
+    // Ignore activity log errors
   });
+
+  // Verify membership was created before returning
+  const { data: membership } = await supabase
+    .from('group_members')
+    .select('role')
+    .eq('group_id', group.id)
+    .eq('user_id', user.id)
+    .single();
+
+  if (!membership) {
+    return { error: 'Failed to verify group membership', data: null };
+  }
 
   revalidatePath('/dashboard');
   revalidatePath('/groups');
-  
+  revalidatePath(`/groups/${group.id}`);
+
   return { error: null, data: group };
 }
 

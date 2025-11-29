@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { redirect } from 'next/navigation';
 import { createClient } from '@/lib/supabase/server';
 import { DashboardLayout } from '@/components/layout';
-import { GroupList, CreateGroupDialog, JoinGroupDialog } from '@/components/groups';
+import { GroupsListWrapper, CreateGroupDialog, JoinGroupDialog } from '@/components/groups';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const metadata = {
@@ -35,7 +35,7 @@ async function GroupsContent() {
     .eq('group_members.user_id', user.id)
     .order('updated_at', { ascending: false });
 
-  return <GroupList groups={groups || []} />;
+  return <GroupsListWrapper initialGroups={groups || []} userId={user.id} />;
 }
 
 function GroupsSkeleton() {

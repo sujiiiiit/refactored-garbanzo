@@ -32,13 +32,27 @@ export default async function GroupPage({ params }: GroupPageProps) {
     redirect('/login');
   }
 
-  // Check if user is a member of this group
-  const { data: membership } = await supabase
-    .from('group_members')
-    .select('role')
-    .eq('group_id', id)
-    .eq('user_id', user.id)
-    .single();
+  // Check if user is a member of this group with retry logic for race conditions
+  let membership = null;
+  let retries = 3;
+
+  while (retries > 0 && !membership) {
+    const { data } = await supabase
+      .from('group_members')
+      .select('role')
+      .eq('group_id', id)
+      .eq('user_id', user.id)
+      .single();
+
+    membership = data;
+
+    if (!membership && retries > 1) {
+      // Wait a bit before retrying (handles race condition during group creation)
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    retries--;
+  }
 
   if (!membership) {
     notFound();

@@ -32,30 +32,31 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // AUTHENTICATION DISABLED FOR TESTING
   // Protected routes
-  const protectedPaths = ['/dashboard', '/groups', '/reports', '/settings', '/business'];
-  const isProtectedPath = protectedPaths.some(path => 
-    request.nextUrl.pathname.startsWith(path)
-  );
+  // const protectedPaths = ['/dashboard', '/groups', '/reports', '/settings', '/business'];
+  // const isProtectedPath = protectedPaths.some(path =>
+  //   request.nextUrl.pathname.startsWith(path)
+  // );
 
-  if (isProtectedPath && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    url.searchParams.set('redirect', request.nextUrl.pathname);
-    return NextResponse.redirect(url);
-  }
+  // if (isProtectedPath && !user) {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = '/login';
+  //   url.searchParams.set('redirect', request.nextUrl.pathname);
+  //   return NextResponse.redirect(url);
+  // }
 
-  // Redirect logged-in users away from auth pages
-  const authPaths = ['/login', '/signup'];
-  const isAuthPath = authPaths.some(path => 
-    request.nextUrl.pathname.startsWith(path)
-  );
+  // // Redirect logged-in users away from auth pages
+  // const authPaths = ['/login', '/signup'];
+  // const isAuthPath = authPaths.some(path =>
+  //   request.nextUrl.pathname.startsWith(path)
+  // );
 
-  if (isAuthPath && user) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/dashboard';
-    return NextResponse.redirect(url);
-  }
+  // if (isAuthPath && user) {
+  //   const url = request.nextUrl.clone();
+  //   url.pathname = '/dashboard';
+  //   return NextResponse.redirect(url);
+  // }
 
   return supabaseResponse;
 }

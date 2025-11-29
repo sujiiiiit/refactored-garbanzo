@@ -25,7 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { useState } from 'react';
 import { useUser } from '@/hooks/use-user';
 import { signOut } from '@/lib/actions/auth';
@@ -38,7 +38,7 @@ const navigation = [
 ];
 
 const businessNavigation = [
-  { name: 'Business', href: '/business', icon: Building2 },
+  { name: 'Control Tower', href: '/control-tower', icon: Building2 },
 ];
 
 export function Sidebar() {
@@ -178,6 +178,10 @@ export function Sidebar() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-64 p-0">
+            <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+            <SheetDescription className="sr-only">
+              Navigate through the application using the menu below
+            </SheetDescription>
             <div className="flex h-full flex-col gap-y-5 overflow-y-auto px-4 py-6">
               {/* Logo */}
               <div className="flex items-center justify-between">

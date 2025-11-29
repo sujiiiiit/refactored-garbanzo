@@ -91,10 +91,14 @@ export function CreateGroupDialog({ trigger }: CreateGroupDialogProps) {
   });
 
   const { execute, loading } = useAsync(createGroup, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       toast.success('Group created successfully!');
       setOpen(false);
       form.reset();
+      // Refresh the router to ensure server components re-fetch
+      router.refresh();
+      // Small delay to ensure database transaction is fully committed
+      await new Promise(resolve => setTimeout(resolve, 100));
       router.push(`/groups/${data?.id}`);
     },
     onError: (error) => {
